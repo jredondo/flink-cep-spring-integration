@@ -1,0 +1,71 @@
+# Set the FLINK_DOCKER_IMAGE_NAME environment variable to override the image name to use
+# Set the REGISTRY_IP environment variable to override the registry IP
+# Set the MANAGER_IP environment variable to override the swarm's manager IP
+
+version: "3.7"
+services:
+  jobmanager:
+    image: ${REGISTRY_IP}/flink
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
+  taskmanager:
+    image: ${REGISTRY_IP}/flink
+    command: taskmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
+##################################################
+  producer:
+    image: ${REGISTRY_IP}/producer
+    depends_on:
+      - kafka1
+
+  consumer:
+    image: ${REGISTRY_IP}/consumer
+    depends_on:
+      - producer
+##################################################
+  zookeeper:
+    image: ${REGISTRY_IP}/zookeeper:latest
+    volumes:
+      - zoo-stack-data:/tmp/zookeeper
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 2181:2181
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+#    deploy:
+#      mode: global
+#      placement:
+#        constraints:
+#          - node.labels.zoo==1
+#    command: /kafka/bin/zookeeper-server-start.sh /kafka/config/zookeeper.properties
+
+  kafka1:
+    image: ${REGISTRY_IP}/kafka:latest
+    volumes:
+       - kafka-stack-1-logs:/tmp/kafka-logs
+       - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+       - 9093:9093
+       - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+       - ALLOW_PLAINTEXT_LISTENER=yes
+       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+       - KAFKA_LISTENERS=PLAINTEXT://:9092
+       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${MANAGER_IP}:9092
+
+
+
+volumes:
+  kafka-stack-1-logs:
+  #kafka-stack-2-logs:
+  #kafka-stack-3-logs:
+  zoo-stack-data:
+

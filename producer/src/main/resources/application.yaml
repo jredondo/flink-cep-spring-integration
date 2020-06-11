@@ -1,0 +1,29 @@
+# config context path to "/" by setting an empty string
+server:
+  contextPath:
+
+# JACKSON
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+
+data-monitor:
+  sender: "init"
+  throughput: 1000
+  N: 1
+
+tcp:
+  enabled: "false"
+  port: 8091
+
+kafka:
+  enabled: "true"
+  topic: "producer.topic"
+  group-id: "siTestGroup"
+#  messageKey: "si.key"
+  buffer-memory: 33554432
+  retries: 0
+#  key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#  value-serializer: org.apache.kafka.common.serialization.StringSerializer
+

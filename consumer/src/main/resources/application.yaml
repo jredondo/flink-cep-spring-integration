@@ -1,0 +1,26 @@
+# config context path to "/" by setting an empty string
+server:
+    contextPath:
+
+# JACKSON
+spring:
+    jackson:
+        serialization:
+            INDENT_OUTPUT: true
+
+kafka:
+    enabled: "true"
+    topic: "consumer.topic"
+    messageKey: "si.key"
+    group-id: "siTestGroup"
+    auto-offset-reset: earliest
+    enable-auto-commit: false
+    #value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    #key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+
+tcp:
+    enabled: "false"
+    mode: "client"
+    port: 8091
+    host: "localhost"

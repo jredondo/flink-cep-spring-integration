@@ -1,0 +1,12 @@
+org.streamexperiments
+org.streamexperiments.config.kafka
+org.streamexperiments.consumer
+org.streamexperiments.consumer.integration.kafka
+org.streamexperiments.consumer.integration.tcp
+org.streamexperiments.consumer.logic
+org.streamexperiments.models
+org.streamexperiments.producer
+org.streamexperiments.producer.integration
+org.streamexperiments.producer.integration.kafka
+org.streamexperiments.producer.integration.tcp
+org.streamexperiments.producer.logic

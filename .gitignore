@@ -1,0 +1,8 @@
+cep/build/
+producer/build/
+consumer/build/
+shared/build/
+buildSrc/.gradle/
+buildSrc/build/
+log/
+.gradle

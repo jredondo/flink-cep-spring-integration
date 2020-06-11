@@ -1,0 +1,12 @@
+
+
+kafka:
+  producerTopic: "producer.topic"
+  consumerTopic: "consumer.topic"
+  messageKey: "si.key"
+  groupId: "siTestGroup"
+  autoOffsetReset: "earliest"
+  enableAutoCommit: false
+  bootstrapServers: "192.168.99.147:9092"
+  zookeeperConnect: "192.168.99.147:2181"
+

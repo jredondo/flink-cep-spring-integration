@@ -1,0 +1,36 @@
+
+plugins {
+    id "java"
+    id "org.springframework.boot" version "2.3.0.RELEASE"
+}
+
+
+def junitVersion = '4.8.2'
+
+
+version = '0.0'
+
+bootJar {
+    baseName = 'producer'
+    version =  '0.0'
+}
+
+
+dependencies {
+    compile project(":shared")
+    compile("org.springframework.boot:spring-boot-starter-web:2.3.0.RELEASE")
+    compile 'org.springframework.integration:spring-integration-core:5.2.6.RELEASE'
+    compile 'org.springframework.integration:spring-integration-ip:5.2.6.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-kafka
+    compile group: 'org.springframework.integration', name: 'spring-integration-kafka', version: '3.3.0.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+    compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+
+    // https://mvnrepository.com/artifact/org.apache.kafka/kafka
+    compile group: 'org.apache.kafka', name: 'kafka_2.12', version: '2.5.0'
+
+
+    testCompile "junit:junit:$junitVersion"
+}
