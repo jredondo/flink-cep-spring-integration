@@ -6,7 +6,7 @@ This is a step forward on the [Simple Producer/Consumer implementation using Spr
 
 Basically, a [Complex Event Processor](https://en.wikipedia.org/wiki/Complex_event_processing) (or simply a CEP), implemented with [Flink](https://flink.apache.org/), has been inserted between the producer and consumer processes.  
 Producer and consumer code remain untouched, so they keep being a lean implementation using [Spring Integration](https://docs.spring.io/spring-integration/reference/html/overview.html). 
-For the scope of this repository's experiments, Kafka integration is used between Producer, CEP, Consumer. 
+For the scope of this repository's experiments, Kafka integration is used between Producer, CEP and Consumer. 
 
 The main purpose is to offer a simple implementation suitable as the starting point for testing the "statefulness" of clustered stream processing using Flink and Kafka.  
 
