@@ -23,10 +23,6 @@ public class Update {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getTimestamp() {
         return timestamp;
     }
@@ -34,15 +30,6 @@ public class Update {
     public String getSender() {
         return sender;
     }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
 
     @Override
     public String toString() {

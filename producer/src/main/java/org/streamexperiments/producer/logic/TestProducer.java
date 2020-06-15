@@ -53,6 +53,8 @@ public class TestProducer {
             return;
         }
 
+        System.out.println("**************************************************");
+        System.out.println("**************************************************");
         System.out.println("********** @@@ TESTING PRODUCER @@@ ***********");
         System.out.println("* " + N + " updates each " + throughput + " milliseconds *");
         System.out.println("**************************************");
