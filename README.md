@@ -1,11 +1,14 @@
-# Simple Producer/CEP/Consumer implementation using Spring Integration.
+# Boilerplate for a Complex Event Processing pipeline using Flink and Spring Integration
+
+Simple Producer -> Flink CEP -> Consumer implementation using [Flink](https://flink.apache.org/) and [Spring Integration](https://docs.spring.io/spring-integration/reference/html/overview.html).
 
 This is a step forward on the [Simple Producer/Consumer implementation using Spring Integration](https://github.com/jredondo/spring-integration-producer-consumer).
 
-Basically, a [Complex Event Processor](https://en.wikipedia.org/wiki/Complex_event_processing) (or simple CEP) has been inserted between the originals producer and consumer processes.  
-Producer and consumer code remain untouched, so it keeps being a clean implementation using [Spring Integration](https://docs.spring.io/spring-integration/reference/html/overview.html). 
-For the scope of this repository's experiments, only Kafka integration is used. 
-The main purpose is to offer and simple implementation suitable as the starting point for testing the "statefulness" of stream processing using Flink and Kafka.  
+Basically, a [Complex Event Processor](https://en.wikipedia.org/wiki/Complex_event_processing) (or simply a CEP), implemented with [Flink](https://flink.apache.org/), has been inserted between the producer and consumer processes.  
+Producer and consumer code remain untouched, so they keep being a lean implementation using [Spring Integration](https://docs.spring.io/spring-integration/reference/html/overview.html). 
+For the scope of this repository's experiments, Kafka integration is used between Producer, CEP and Consumer. 
+
+The main purpose is to offer a simple implementation suitable as the starting point for testing the "statefulness" of clustered stream processing using Flink and Kafka.  
 
 The CEP implementation is under cep/ directory.  
 
@@ -56,3 +59,6 @@ Email: Jorge Redondo Flames <jorge.redondo -- gmail.com>
 LinkedIn: https://www.linkedin.com/in/jorge-redondo-flames-45589418a/
 ``` 
 
+#### TODO:
+
+Everything!
