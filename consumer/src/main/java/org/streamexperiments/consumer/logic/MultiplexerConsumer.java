@@ -21,13 +21,14 @@ public class MultiplexerConsumer implements Consumer {
 
     private static Logger logger = LogManager.getLogger(MultiplexerConsumer.class);
 
-    private Map<String, Set<Update>> map = new HashMap<>();
+    private Map<String, Long> map = new HashMap<>();
 
     public void consume(Update update) {
-        Set<Update> set = map.computeIfAbsent(update.getSender(), (key) -> new HashSet<Update>());
-        if(set.size() % Consumer.PRINT_COUNT == 0) {
-            logger.info(set.size() + " items for sender: " + update.getSender());
+        Long count = map.computeIfAbsent(update.getSender(), (key) -> 1L);
+        if(count % Consumer.PRINT_COUNT == 0) {
+            logger.info(count + " items for sender: " + update.getSender());
+            logger.info("Registered producers: " + map.size());
         }
-        set.add(update);
+        map.put(update.getSender(), ++count);
     }
 }

@@ -13,7 +13,7 @@ def junitVersion = '4.8.2'
 
 version = '0.0'
 
-mainClassName = "org.streamexperiments.cep.process.CEP"
+mainClassName = "org.streamexperiments.cep.CEP"
 
 dependencies {
     compile project(":shared")
@@ -33,7 +33,7 @@ task buildJar(type: Jar) {
     
     manifest {
         attributes(
-                "Main-Class": "org.streamexperiments.cep.process.CEP",
+                "Main-Class": "org.streamexperiments.cep.CEP",
         )
     }
 }

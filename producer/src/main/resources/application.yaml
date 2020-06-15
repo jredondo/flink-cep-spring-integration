@@ -10,7 +10,7 @@ spring:
 
 data-monitor:
   sender: "init"
-  throughput: 1000
+  throughput: 1
   N: 1
 
 tcp:

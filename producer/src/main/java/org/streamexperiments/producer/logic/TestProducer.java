@@ -15,6 +15,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class TestProducer {
 
+    private final long waitTime = 10000;
+
     private long throughput;
     private long N;
     private final String senderHashCode;
@@ -54,11 +56,14 @@ public class TestProducer {
         System.out.println("********** @@@ TESTING PRODUCER @@@ ***********");
         System.out.println("* " + N + " updates each " + throughput + " milliseconds *");
         System.out.println("**************************************");
+        System.out.println("**************************************************");
+        System.out.println("******* Producer ID: " + senderHashCode + " **********");
+        System.out.println("**************************************************");
 
         new Thread(() -> {
             try {
                 // Give time to integration layer to wake up:
-                Thread.sleep(5000);
+                Thread.sleep(waitTime);
                 while (true) {
                     Thread.sleep(throughput);
 

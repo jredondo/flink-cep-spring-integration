@@ -27,14 +27,14 @@ public class DefinedFunctions {
                 set.add(update);
             }
 
-            logger.info("Window processing " + set.size() + " updates.");
+            //logger.info("Window processing " + set.size() + " updates.");
         }
     }
 
     public static class LogFlatMapFunction implements FlatMapFunction<Update, Update> {
         @Override
         public void flatMap(Update update, Collector<Update> out) {
-            logger.info("TESTING flatMap: " + update.toString());
+            //logger.info("TESTING flatMap: " + update.toString());
             out.collect(update);
         }
     }

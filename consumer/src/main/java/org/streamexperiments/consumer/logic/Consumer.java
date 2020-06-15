@@ -9,6 +9,6 @@ import org.streamexperiments.models.Update;
  * @author Jorge Redondo Flames <jorge.redondo@gmail.com>.
  */
 public interface Consumer {
-    int PRINT_COUNT = 10;
+    int PRINT_COUNT = 10000;
     void consume(Update update);
 }
