@@ -6,3 +6,4 @@ buildSrc/.gradle/
 buildSrc/build/
 log/
 .gradle
+.idea
