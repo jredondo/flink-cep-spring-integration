@@ -14,7 +14,7 @@ import org.streamexperiments.models.Update;
  */
 public class SimpleConsumer implements Consumer {
 
-    private final long THRESHOLD = 10000;
+    private final long THRESHOLD = 5;
     private static Logger logger = LogManager.getLogger(SimpleConsumer.class);
 
     private long count;

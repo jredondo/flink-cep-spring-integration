@@ -15,7 +15,7 @@ import java.util.*;
  *
  */
 public class IntegrityVerifierConsumer implements Consumer {
-    private final long THRESHOLD = 10000;
+    private final long THRESHOLD = 5;
 
     private static Logger logger = LogManager.getLogger(IntegrityVerifierConsumer.class);
 
@@ -58,7 +58,7 @@ public class IntegrityVerifierConsumer implements Consumer {
 
     private class ProducerRecord {
         Long lastTime;
-        Set<Long> ids = new HashSet<>();
+        List<Long> ids = new ArrayList<>();
 
         public void update(Update update) {
             ids.add(update.getId());
@@ -66,10 +66,10 @@ public class IntegrityVerifierConsumer implements Consumer {
         }
 
         private boolean dataLoss() {
-            List<Long> list = new ArrayList<>(this.ids);
-            Collections.sort(list);
+            List<Long> copy = new ArrayList<>(ids);
+            Collections.sort(copy);
             long aux = -1;
-            for (Long item : list) {
+            for (Long item : copy) {
                 if (aux == -1) {
                     aux = item;
                     continue;

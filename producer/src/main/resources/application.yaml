@@ -10,16 +10,16 @@ spring:
 
 data-monitor:
   sender: "init"
-  throughput: 1
+  throughput: 1000
   N: 1
   producer-uuid: "producer-default-name"
 
 tcp:
-  enabled: "true"
+  enabled: "false"
   port: 8091
 
 kafka:
-  enabled: "false"
+  enabled: "true"
   topic: "producer.topic"
   group-id: "siTestGroup"
 #  messageKey: "si.key"

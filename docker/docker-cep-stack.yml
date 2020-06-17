@@ -16,7 +16,7 @@ services:
     image: ${REGISTRY_IP}/flink
     command: taskmanager
     deploy:
-      replicas: 2
+      replicas: 1
       update_config:
         parallelism: 1 
         delay: 10s

@@ -78,6 +78,7 @@ public class TestProducer {
         System.out.println("**************************************");
         System.out.println("**************************************************");
         System.out.println("******* Producer ID: " + senderUUID + " **********");
+        System.out.println("******* Sequence: " + sequece.get() + " **********");
         System.out.println("**************************************************");
 
         new Thread(() -> {
