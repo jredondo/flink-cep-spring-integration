@@ -3,9 +3,14 @@ package org.streamexperiments.producer.logic;
 import org.streamexperiments.models.Update;
 import org.streamexperiments.producer.integration.Sender;
 
+import javax.annotation.PreDestroy;
+import java.io.*;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Example of the producer's logic implementation decoupled from any integration matter.
@@ -14,12 +19,13 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  */
 public class TestProducer {
+    private static Logger logger = LogManager.getLogger(TestProducer.class);
 
     private final long waitTime = 10000;
 
     private long throughput;
     private long N;
-    private final String senderHashCode;
+    private String senderUUID;
     private Update update;
     private AtomicLong sequece = new AtomicLong();
     private Set<Sender> senders;
@@ -30,11 +36,23 @@ public class TestProducer {
      * in every {@link Update} produced. Also initializes the set of senders.
      *
      */
-    public TestProducer(long throughput, long N) {
+    public TestProducer(long throughput, long N, String senderUUID) {
         this.throughput = throughput;
         this.N = N;
-        senderHashCode = Integer.toString((int)(Math.random()*Integer.MAX_VALUE));
+        this.senderUUID = senderUUID;
         senders = new HashSet<>();
+
+        if(new File(senderUUID).exists()) {
+            try {
+                Scanner scanner = new Scanner(new File(senderUUID));
+                long offset = scanner.nextLong();
+                sequece.set(offset);
+            } catch (FileNotFoundException ex) {
+                logger.error(ex.getMessage());
+            }
+        } else {
+            sequece.set(0L);
+        }
     }
 
     /**
@@ -59,7 +77,7 @@ public class TestProducer {
         System.out.println("* " + N + " updates each " + throughput + " milliseconds *");
         System.out.println("**************************************");
         System.out.println("**************************************************");
-        System.out.println("******* Producer ID: " + senderHashCode + " **********");
+        System.out.println("******* Producer ID: " + senderUUID + " **********");
         System.out.println("**************************************************");
 
         new Thread(() -> {
@@ -70,7 +88,7 @@ public class TestProducer {
                     Thread.sleep(throughput);
 
                     for(int i = 0; i < N; i++) {
-                        update = new Update(sequece.getAndIncrement(), senderHashCode, System.currentTimeMillis());
+                        update = new Update(sequece.getAndIncrement(), senderUUID, System.currentTimeMillis());
                         senders.forEach((sender) -> sender.send(update));
                     }
                 }
@@ -82,5 +100,20 @@ public class TestProducer {
         started = true;
 
         return;
+    }
+
+    public void shutdown() {
+        System.out.println("**************************************************");
+        System.out.println("**************************************************");
+        System.out.println("********** @@@ FINISHING PRODUCER @@@ ************");
+        System.out.println("**************************************************");
+        System.out.println("**************************************************");
+
+        try(FileWriter writer = new FileWriter(senderUUID)) {
+            writer.write(String.valueOf(sequece.intValue()));
+        } catch(IOException ex) {
+            logger.error(ex.getMessage());
+        }
+
     }
 }

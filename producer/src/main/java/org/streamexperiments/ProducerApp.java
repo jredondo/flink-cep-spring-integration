@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
+import javax.annotation.PreDestroy;
+
 
 @SpringBootApplication
 @EnableConfigurationProperties(KafkaAppProperties.class)
@@ -23,4 +25,5 @@ public class ProducerApp {
 
 
     }
+
 }

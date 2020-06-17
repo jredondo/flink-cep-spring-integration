@@ -23,7 +23,7 @@ public class IntegrityVerifierConsumer implements Consumer {
 
     public void consume(Update update) {
         ProducerRecord record = map.computeIfAbsent(update.getSender(),
-                (key) -> new ProducerRecord(System.currentTimeMillis()));
+                (key) -> new ProducerRecord());
 
         record.update(update);
 
@@ -59,10 +59,6 @@ public class IntegrityVerifierConsumer implements Consumer {
     private class ProducerRecord {
         Long lastTime;
         Set<Long> ids = new HashSet<>();
-
-        public ProducerRecord(Long time) {
-            this.lastTime = time;
-        }
 
         public void update(Update update) {
             ids.add(update.getId());

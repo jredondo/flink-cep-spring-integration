@@ -12,13 +12,14 @@ data-monitor:
   sender: "init"
   throughput: 1
   N: 1
+  producer-uuid: "producer-default-name"
 
 tcp:
-  enabled: "false"
+  enabled: "true"
   port: 8091
 
 kafka:
-  enabled: "true"
+  enabled: "false"
   topic: "producer.topic"
   group-id: "siTestGroup"
 #  messageKey: "si.key"

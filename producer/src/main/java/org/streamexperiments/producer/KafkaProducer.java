@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * Example Kafka producer using decoupled integration ({@link KafkaProducerConfiguration.Gateway})
@@ -19,6 +20,8 @@ import javax.annotation.PostConstruct;
 @ConditionalOnProperty(value="kafka.enabled", havingValue = "true")
 public class KafkaProducer {
 
+    @Value("${data-monitor.producer-uuid}")
+    private String producerUUID;
 
     @Value("${data-monitor.throughput}")
     private long throughput;
@@ -40,9 +43,13 @@ public class KafkaProducer {
      */
     @PostConstruct
     private void init() {
-        producer = new TestProducer(throughput, N);
+        producer = new TestProducer(throughput, N, producerUUID);
         producer.addSender(new Sender(kafkaGateway, properties.getTopic()));
         producer.start();
     }
 
+    @PreDestroy
+    public void onExit() {
+        producer.shutdown();
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.integration.ip.tcp.connection.TcpConnectionOpenEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * Example TCP producer using decoupled integration ({@link TcpProducerConfiguration.Gateway})
@@ -19,6 +20,9 @@ import javax.annotation.PostConstruct;
 @Component
 @ConditionalOnProperty(value="tcp.enabled", havingValue = "true")
 public class TcpProducer implements ApplicationListener<TcpConnectionOpenEvent> {
+
+    @Value("${data-monitor.producer-uuid}")
+    private String producerUUID;
 
     @Value("${data-monitor.throughput}")
     private long throughput;
@@ -33,7 +37,7 @@ public class TcpProducer implements ApplicationListener<TcpConnectionOpenEvent> 
 
     @PostConstruct
     private void init() {
-        producer = new TestProducer(throughput, N);
+        producer = new TestProducer(throughput, N, producerUUID);
     }
 
     /**
@@ -45,5 +49,10 @@ public class TcpProducer implements ApplicationListener<TcpConnectionOpenEvent> 
     public void onApplicationEvent(TcpConnectionOpenEvent event) {
         producer.addSender(new Sender(tcpGateway, event.getConnectionId()));
         producer.start();
+    }
+
+    @PreDestroy
+    public void onExit() {
+        producer.shutdown();
     }
 }
