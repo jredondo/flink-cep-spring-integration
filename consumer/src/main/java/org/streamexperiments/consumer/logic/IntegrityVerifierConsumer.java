@@ -30,7 +30,7 @@ public class IntegrityVerifierConsumer implements Consumer {
         if(record.ids.size() % THRESHOLD == 0) {
             senderLogReport(THRESHOLD, update.getSender(), record);
             if(dataLoss(update.getSender())) {
-                printDataLossBanner();
+                printDataLossBanner(update.getSender());
             }
         }
 
@@ -41,11 +41,11 @@ public class IntegrityVerifierConsumer implements Consumer {
         return record != null && record.dataLoss();
     }
 
-    private void printDataLossBanner() {
+    private void printDataLossBanner(String producer) {
         logger.info("###############################");
         logger.info("###############################");
         logger.info("########## DATA LOSS ##########");
-        logger.info("###############################");
+        logger.info("######" + producer  + "######");
         logger.info("###############################");
     }
 

@@ -10,7 +10,7 @@ spring:
 
 kafka:
     enabled: "true"
-    topic: "producer.topic"
+    topic: "consumer.topic"
     messageKey: "si.key"
     group-id: "siTestGroup"
     auto-offset-reset: earliest
