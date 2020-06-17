@@ -14,6 +14,7 @@ import org.streamexperiments.models.Update;
  */
 public class SimpleConsumer implements Consumer {
 
+    private final long THRESHOLD = 10000;
     private static Logger logger = LogManager.getLogger(SimpleConsumer.class);
 
     private long count;
@@ -21,7 +22,7 @@ public class SimpleConsumer implements Consumer {
     public void consume(Update update) {
         // Insert here whatever processing to Update instances you may need:
         // (As for now, only print the count)
-        if(count % Consumer.PRINT_COUNT == 0) {
+        if(count % THRESHOLD == 0) {
             logger.info(count + " items processed");
         }
         count++;

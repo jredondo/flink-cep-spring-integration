@@ -1,7 +1,7 @@
 package org.streamexperiments.consumer;
 
 import org.streamexperiments.consumer.logic.Consumer;
-import org.streamexperiments.consumer.logic.MultiplexerConsumer;
+import org.streamexperiments.consumer.logic.IntegrityVerifierConsumer;
 import org.streamexperiments.consumer.logic.SimpleConsumer;
 import org.streamexperiments.models.Update;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +25,7 @@ public class ExampleConsumerImpl {
 
     public ExampleConsumerImpl() {
         consumers.add(new SimpleConsumer());
-        consumers.add(new MultiplexerConsumer());
+        consumers.add(new IntegrityVerifierConsumer());
     }
 
     private void process(Update update) {
