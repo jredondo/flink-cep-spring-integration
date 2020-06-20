@@ -24,17 +24,24 @@ services:
        - kafka-stack-1-logs:/tmp/kafka-logs
        - /var/run/docker.sock:/var/run/docker.sock
     ports:
-       - 9093:9093
-       - 9092:9092
+#       - 9093:9093
+        - 9092:9092
+        - target: 9094
+          published: 9094
+          protocol: tcp
+          mode: host
     networks:
-       - kafka-net
+        - kafka-net
     environment:
-       - ALLOW_PLAINTEXT_LISTENER=yes
-       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-       - KAFKA_LISTENERS=PLAINTEXT://:9092
-       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://192.168.99.147:9092
+        - HOSTNAME_COMMAND="docker info | grep \'^ Name:\' | cut -d\' \' -f 3"
+        - ALLOW_PLAINTEXT_LISTENER=yes
+        - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+        - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+        - KAFKA_CFG_ADVERTISED_LISTENERS=INSIDE://:9092,OUTSIDE://${HOSTNAME_COMMAND}:9094
+        - KAFKA_CFG_LISTENERS=INSIDE://:9092,OUTSIDE://:9094
+        - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
 #    deploy:
-#      mode: global
+#      mode=global
 #      placement:
 #        constraints:
 #          - node.labels.kafka==1
