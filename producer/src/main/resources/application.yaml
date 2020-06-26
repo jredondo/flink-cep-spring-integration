@@ -22,7 +22,7 @@ kafka:
   enabled: "true"
   topic: "producer.topic"
   group-id: "siTestGroup"
-#  messageKey: "si.key"
+  messageKey: "si.key"
   buffer-memory: 33554432
   retries: 0
 #  key-serializer: org.apache.kafka.common.serialization.StringSerializer

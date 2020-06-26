@@ -2,16 +2,18 @@
 # Set the REGISTRY_IP environment variable to override the swarm's manager IP
 
 version: "3.7"
+
+
 services:
   producer:
     image: ${REGISTRY_IP}/producer
     depends_on:
       - kafka1
-
-  consumer:
-    image: ${REGISTRY_IP}/consumer
-    depends_on:
-      - producer
+#
+#  consumer:
+#    image: ${REGISTRY_IP}/consumer
+#    depends_on:
+#      - producer
 
 ##################################################
 # Kafka:
@@ -37,22 +39,25 @@ services:
        - kafka-stack-1-logs:/tmp/kafka-logs
        - /var/run/docker.sock:/var/run/docker.sock
     ports:
-        - 9092:9092
-        - target: 9094
-          published: 9094
+    #    - 9092:9092
+        - 9094:9094
+    #    - target: 9092
+    #      published: 9092
+    #      protocol: tcp
+    #      mode: host
+        - target: 9092
+          published: 9092
           protocol: tcp
           mode: host
-    networks:
-        - kafka-net
+   # deploy:
+   #     replicas: 2
     environment:
-        - HOSTNAME_COMMAND="docker info | grep \'^ Name:\' | cut -d\' \' -f 3"
-        - ALLOW_PLAINTEXT_LISTENER=yes
-        - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-        - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-        - KAFKA_CFG_ADVERTISED_LISTENERS=INSIDE://:9092,OUTSIDE://${HOSTNAME_COMMAND}:9094
-        - KAFKA_CFG_LISTENERS=INSIDE://:9092,OUTSIDE://:9094
-        - KAFKA_INTER_BROKER_LISTENER_NAME=INSIDE
-
+        ALLOW_PLAINTEXT_LISTENER: "yes"
+        KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+        KAFKA_CFG_LISTENERS: INTERNAL://:9094,EXTERNAL://:9092
+        KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://{{.Node.Hostname}}:9094,EXTERNAL://:9092
+        KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+        KAFKA_INTER_BROKER_LISTENER_NAME: EXTERNAL
 
 volumes:
   kafka-stack-1-logs:

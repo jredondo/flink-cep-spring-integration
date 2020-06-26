@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public class TestProducer {
     private static Logger logger = LogManager.getLogger(TestProducer.class);
 
-    private final long waitTime = 10000;
+    private final long waitTime = 30000;
 
     private long throughput;
     private long N;

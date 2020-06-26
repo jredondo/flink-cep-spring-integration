@@ -1,5 +1,6 @@
 package org.streamexperiments.producer.integration.kafka;
 
+import org.springframework.kafka.config.TopicBuilder;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.streamexperiments.config.kafka.KafkaAppProperties;
@@ -122,6 +123,11 @@ public class KafkaProducerConfiguration {
      */
     @Bean
     public NewTopic topic(KafkaAppProperties properties) {
-        return new NewTopic(properties.getTopic(), 1, (short) 1);
+        return TopicBuilder.name(properties.getTopic())
+            .partitions(1)
+            .replicas(1)
+            .compact()
+            .build();
+        //return new NewTopic(properties.getTopic(), 1, (short) 3);
     }
 }
