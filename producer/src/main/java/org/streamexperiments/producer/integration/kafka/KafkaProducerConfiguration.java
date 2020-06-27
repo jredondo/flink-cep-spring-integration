@@ -123,9 +123,15 @@ public class KafkaProducerConfiguration {
      */
     @Bean
     public NewTopic topic(KafkaAppProperties properties) {
+        try { 
+            Thread.sleep(20000);
+        } catch(InterruptedException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+        }
         return TopicBuilder.name(properties.getTopic())
             .partitions(1)
-            .replicas(1)
+            .replicas(2)
             .compact()
             .build();
         //return new NewTopic(properties.getTopic(), 1, (short) 3);
