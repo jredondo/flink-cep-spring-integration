@@ -5,15 +5,15 @@ version: "3.7"
 
 
 services:
-  producer:
-    image: ${REGISTRY_IP}/producer:latest
-    depends_on:
-      - kafka1
-
-#  consumer:
-#    image: ${REGISTRY_IP}/consumer:latest
+#  producer:
+#    image: ${REGISTRY_IP}/producer:latest
 #    depends_on:
-#      - producer
+#      - kafka1
+
+  consumer:
+    image: ${REGISTRY_IP}/consumer:latest
+    depends_on:
+      - producer
 
 ###################################################
 ## Kafka:

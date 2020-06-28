@@ -33,14 +33,14 @@ services:
 #          - node.labels.zoo==1
 #    command: /kafka/bin/zookeeper-server-start.sh /kafka/config/zookeeper.properties
 
-  kafka1:
+  kafka1-backup:
     image: 192.168.99.147/kafka:latest
     volumes:
        - kafka-stack-1-logs:/tmp/kafka-logs
        - /var/run/docker.sock:/var/run/docker.sock
     ports:
     #    - 9092:9092
-        - 9094:9094
+        - 29094:29094
     #    - target: 9092
     #      published: 9092
     #      protocol: tcp
@@ -54,8 +54,8 @@ services:
     environment:
         ALLOW_PLAINTEXT_LISTENER: "yes"
         KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
-        KAFKA_CFG_LISTENERS: INTERNAL://:9094,EXTERNAL://:9092
-        KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://{{.Node.Hostname}}:9094,EXTERNAL://:9092
+        KAFKA_CFG_LISTENERS: INTERNAL://:29094,EXTERNAL://:9092
+        KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://{{.Node.Hostname}}:29094,EXTERNAL://:9092
         KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
         KAFKA_INTER_BROKER_LISTENER_NAME: EXTERNAL
 

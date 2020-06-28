@@ -25,6 +25,7 @@ kafka:
   messageKey: "si.key"
   buffer-memory: 33554432
   retries: 0
+  replicas: 2
 #  key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #  value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
